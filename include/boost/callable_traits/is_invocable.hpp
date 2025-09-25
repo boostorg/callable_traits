@@ -44,21 +44,6 @@ struct is_invocable_r
         typename detail::is_invocable_impl<T, Args...>::type, Ret, T, Args...>::type;
 };
 
-#ifdef BOOST_CLBL_TRTS_DISABLE_VARIABLE_TEMPLATES
-
-template<typename T, typename... Args>
-struct is_invocable_v {
-    static_assert(std::is_same<T, detail::dummy>::value,
-        "Variable templates not supported on this compiler.");
-};
-
-template<typename Ret, typename T, typename... Args>
-struct is_invocable_r_v {
-    static_assert(std::is_same<T, detail::dummy>::value,
-        "Variable templates not supported on this compiler.");
-};
-
-#else
 //->
 // only available when variable templates are supported
 template<typename T, typename... Args>
@@ -80,7 +65,6 @@ constexpr bool is_invocable_r_v = //see below
     detail::is_invocable_r_impl<
         typename detail::is_invocable_impl<T, Args...>::type,
         Ret, T, Args...>::type::value;
-#endif
 
 }} // namespace boost::callable_traits
 //->

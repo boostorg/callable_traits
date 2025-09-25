@@ -30,15 +30,6 @@ struct has_void_return
     : std::is_same<typename detail::traits<
         detail::shallow_decay<T>>::return_type, void> {};
 
-#ifdef BOOST_CLBL_TRTS_DISABLE_VARIABLE_TEMPLATES
-
-template<typename T>
-struct has_void_return_v {
-    static_assert(std::is_same<T, detail::dummy>::value,
-        "Variable templates not supported on this compiler.");
-};
-
-#else
 //->
 
 // only available when variable templates are supported
@@ -50,8 +41,6 @@ constexpr bool has_void_return_v = //see below
 //<-
     std::is_same<typename detail::traits<
         detail::shallow_decay<T>>::return_type, void>::value;
-
-#endif
 
 }} // namespace boost::callable_traits
 //->

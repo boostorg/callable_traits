@@ -81,7 +81,7 @@ template<qualifier_flags Flags>
 using remove_volatile_flag = std::integral_constant<
     qualifier_flags, Flags & ~volatile_>;
 
-template<typename U, typename T = typename std::remove_reference<U>::type>
+template<typename U, typename T = std::remove_reference_t<U>>
 using cv_of = std::integral_constant<qualifier_flags,
     (std::is_const<T>::value ? const_ : default_)
     | (std::is_volatile<T>::value ? volatile_ : default_)>;

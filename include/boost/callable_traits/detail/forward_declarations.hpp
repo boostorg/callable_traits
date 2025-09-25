@@ -30,9 +30,9 @@ struct callable_dummy {
 };
 
 template<typename T>
-using default_to_function_object = typename std::conditional<
+using default_to_function_object = std::conditional_t<
     has_normal_call_operator<T>::value,
-    T, callable_dummy>::type;
+    T, callable_dummy>;
 
 template<typename T>
 struct pmf;
@@ -40,11 +40,11 @@ struct pmf;
 template<typename T>
 struct pmd;
 
-template<typename F, typename T = typename std::remove_reference<F>::type>
-using function_object_base = typename std::conditional<
+template<typename F, typename T = std::remove_reference_t<F>>
+using function_object_base = std::conditional_t<
     has_normal_call_operator<T>::value,
     pmf<decltype(&default_to_function_object<T>::operator())>,
-    default_callable_traits<T>>::type;
+    default_callable_traits<T>>;
 
 template<typename T, typename Base = function_object_base<T>>
 struct function_object;

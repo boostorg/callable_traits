@@ -19,8 +19,8 @@ struct is_substitution_failure_class_of {
     static auto test(...) -> std::true_type;
 
     template<typename A,
-        typename std::remove_reference<
-            TRAIT(class_of, A)>::type* = nullptr>
+        std::remove_reference_t<
+            TRAIT(class_of, A)>* = nullptr>
     static auto test(int) -> std::false_type;
 
     static constexpr bool value = decltype(test<T>(0))::value;

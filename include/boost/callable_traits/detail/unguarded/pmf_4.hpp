@@ -47,11 +47,11 @@ struct pmf<Return(BOOST_CLBL_TRTS_CC T::*)(Args...)
         BOOST_CLBL_TRTS_INCLUDE_TRANSACTION_SAFE
         BOOST_CLBL_TRTS_NOEXCEPT_SPEC;
 
-    using invoke_type = typename std::conditional<
+    using invoke_type = std::conditional_t<
         std::is_rvalue_reference<T BOOST_CLBL_TRTS_INCLUDE_QUALIFIERS>::value,
         T BOOST_CLBL_TRTS_INCLUDE_QUALIFIERS,
-        typename std::add_lvalue_reference<T BOOST_CLBL_TRTS_INCLUDE_QUALIFIERS>::type
-    >::type;
+        std::add_lvalue_reference_t<T BOOST_CLBL_TRTS_INCLUDE_QUALIFIERS>
+    >;
     
     using arg_types = std::tuple<invoke_type, Args...>;
     using non_invoke_arg_types = std::tuple<Args...>;

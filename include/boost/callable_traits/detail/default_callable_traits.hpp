@@ -132,14 +132,14 @@ struct default_callable_traits {
     // everything else into member data pointers.
     template<typename C,
         typename U = T,
-        typename K = typename std::remove_reference<U>::type,
-        typename L = typename std::conditional<
-            std::is_same<void, K>::value, error_t, K>::type,
-        typename Class = typename std::conditional<
-            std::is_class<C>::value, C, error_t>::type>
-    using apply_member_pointer = typename std::conditional<
+        typename K = std::remove_reference_t<U>,
+        typename L = std::conditional_t<
+            std::is_same<void, K>::value, error_t, K>,
+        typename Class = std::conditional_t<
+            std::is_class_v<C>, C, error_t>>
+    using apply_member_pointer = std::conditional_t<
         std::is_same<L, error_t>::value || std::is_same<Class, error_t>::value,
-        error_t, L Class::*>::type;
+        error_t, L Class::*>;
     
     // Changes the return type of PMFs, function pointers, function
     // references, and qualified/unqualified function types. Changes

@@ -142,7 +142,7 @@ template<typename T>
 struct function<T&> : std::conditional<function<T>::value,
     function<T>, default_callable_traits<T&>>::type {
 
-    static constexpr const bool value = !std::is_pointer<T>::value;
+    static constexpr const bool value = !std::is_pointer_v<T>;
 
     using traits = function;
     using base = function<T>;

@@ -17,8 +17,8 @@ struct is_substitution_failure_apply_member_pointer {
     static auto test(...) -> std::true_type;
 
     template<typename A, typename B,
-        typename std::remove_reference<
-            TRAIT(apply_member_pointer, A, B)>::type* = nullptr>
+        std::remove_reference_t<
+            TRAIT(apply_member_pointer, A, B)>* = nullptr>
     static auto test(int) -> std::false_type;
 
     static constexpr bool value = decltype(test<T, U>(0))::value;

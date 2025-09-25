@@ -26,7 +26,7 @@ namespace boost { namespace callable_traits { namespace detail {
 
         template<typename U>
         static std::int8_t test(
-            check<typename std::remove_reference<decltype(*std::declval<U>())>::type>*
+            check<std::remove_reference_t<decltype(*std::declval<U>())>>*
         );
 
         template<typename>
@@ -69,8 +69,8 @@ namespace boost { namespace callable_traits { namespace detail {
     template<typename Base, typename T,
              typename IsBaseOf = std::is_base_of<Base, shallow_decay<T>>,
              typename IsSame = std::is_same<Base, shallow_decay<T>>>
-    using generalize_if_dissimilar = typename std::conditional<
-        IsBaseOf::value || IsSame::value, T, generalize<T>>::type;
+    using generalize_if_dissimilar = std::conditional_t<
+        IsBaseOf::value || IsSame::value, T, generalize<T>>;
 
     template<typename Traits, bool = Traits::is_const_member::value
         || Traits::is_volatile_member::value

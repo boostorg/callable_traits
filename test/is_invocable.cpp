@@ -26,16 +26,12 @@ struct invoke_case {
    void operator()(tag<Callable>) const {
 
        CT_ASSERT((Expect == boost::callable_traits::is_invocable<Callable, Args...>()));
-#ifndef BOOST_CLBL_TRTS_DISABLE_VARIABLE_TEMPLATES
        CT_ASSERT((Expect == boost::callable_traits::is_invocable_v<Callable, Args...>));
-#endif
 
 // when available, test parity with std implementation
 #if defined(__cpp_lib_is_invocable)
        CT_ASSERT((std::is_invocable<Callable, Args...>() == boost::callable_traits::is_invocable<Callable, Args...>()));
-#  ifndef BOOST_CLBL_TRTS_DISABLE_VARIABLE_TEMPLATES
        CT_ASSERT((std::is_invocable_v<Callable, Args...> == boost::callable_traits::is_invocable_v<Callable, Args...>));
-#  endif
 #endif
 
    }

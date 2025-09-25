@@ -25,8 +25,8 @@ struct function_object : Base {
     using arg_types = typename Base::non_invoke_arg_types;
     using non_invoke_arg_types = arg_types;
 
-    static constexpr const bool value = std::is_class<
-        typename std::remove_reference<T>::type>::value;
+    static constexpr const bool value = std::is_class_v<
+        std::remove_reference_t<T>>;
 
     using traits = function_object;
     using class_type = error_t;
@@ -54,8 +54,7 @@ struct function_object : Base {
         expand_args_right<Container, LeftArgs...>;
 
     template<typename C, typename U = T>
-    using apply_member_pointer =
-        typename std::remove_reference<U>::type C::*;
+    using apply_member_pointer = std::remove_reference_t<U> C::*;
 
     template<typename>
     using apply_return = error_t;

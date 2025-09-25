@@ -19,8 +19,8 @@ struct is_substitution_failure_remove_varargs {
     static auto test(...) -> std::true_type;
 
     template<typename A,
-        typename std::remove_reference<
-            TRAIT(add_varargs, A)>::type* = nullptr>
+        std::remove_reference_t<
+            TRAIT(add_varargs, A)>* = nullptr>
     static auto test(int) -> std::false_type;
 
     static constexpr bool value = decltype(test<T>(0))::value;

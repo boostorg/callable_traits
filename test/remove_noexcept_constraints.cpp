@@ -21,8 +21,8 @@ struct is_substitution_failure_remove_noexcept {
     static auto test(...) -> std::true_type;
 
     template<typename A,
-        typename std::remove_reference<
-            TRAIT(remove_noexcept, A)>::type* = nullptr>
+        std::remove_reference_t<
+            TRAIT(remove_noexcept, A)>* = nullptr>
     static auto test(int) -> std::false_type;
 
     static constexpr bool value = decltype(test<T>(0))::value;

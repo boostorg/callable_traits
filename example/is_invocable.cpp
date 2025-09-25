@@ -13,7 +13,7 @@ namespace ct = boost::callable_traits;
 
 struct foo {
     template<typename T>
-    typename std::enable_if<std::is_integral<T>::value>::type
+    std::enable_if_t<std::is_integral<T>::value>
     operator()(T){}
 };
 

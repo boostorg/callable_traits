@@ -24,7 +24,7 @@ struct disjunction<T> : T {};
 
 template<typename T, typename... Ts>
 struct disjunction<T, Ts...>
-    : std::conditional<T::value != false, T, disjunction<Ts...>>::type {};
+    : std::conditional_t<bool(T::value), T, disjunction<Ts...>> {};
 
 }}} // namespace boost::callable_traits::detail
 

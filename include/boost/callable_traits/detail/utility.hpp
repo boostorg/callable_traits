@@ -24,8 +24,8 @@ struct invalid_type { invalid_type() = delete; };
 struct reference_error { reference_error() = delete; };
 
 template<typename T>
-using error_type = typename std::conditional<
-    std::is_reference<T>::value, reference_error, invalid_type>::type;
+using error_type = std::conditional_t<
+    std::is_reference<T>::value, reference_error, invalid_type>;
 
 #ifdef BOOST_CLBL_TRTS_DISABLE_ABOMINABLE_FUNCTIONS
 struct abominable_functions_not_supported_on_this_compiler{};
@@ -42,7 +42,7 @@ using bool_type = std::integral_constant<bool, Value>;
 
 // shorthand for std::tuple_element
 template<std::size_t I, typename Tup>
-using at = typename std::tuple_element<I, Tup>::type;
+using at = std::tuple_element_t<I, Tup>;
 
 template<typename T, typename Class>
 using add_member_pointer = T Class::*;
@@ -51,23 +51,23 @@ template<typename L, typename R, typename ErrorType>
  using fail_when_same = fail_if<std::is_same<L, R>::value, ErrorType>;
 
 template<typename T, typename ErrorType,
-    typename U = typename std::remove_reference<T>::type>
+    typename U = std::remove_reference_t<T>>
 using try_but_fail_if_invalid = sfinae_try<T,
     fail_when_same<U, invalid_type, ErrorType>,
     fail_when_same<U, reference_error,
         reference_type_not_supported_by_this_metafunction>>;
 
 template<typename T, typename ErrorType,
-    typename U = typename std::remove_reference<T>::type,
+    typename U = std::remove_reference_t<T>,
     bool is_reference_error = std::is_same<reference_error, U>::value>
 using fail_if_invalid = fail_if<
     std::is_same<U, invalid_type>::value || is_reference_error,
-    typename std::conditional<is_reference_error,
-        reference_type_not_supported_by_this_metafunction, ErrorType>::type>;
+    std::conditional_t<is_reference_error,
+        reference_type_not_supported_by_this_metafunction, ErrorType>>;
 
 template<typename T, typename Fallback>
-using fallback_if_invalid = typename std::conditional<
-    std::is_same<T, invalid_type>::value, Fallback, T>::type;
+using fallback_if_invalid = std::conditional_t<
+    std::is_same<T, invalid_type>::value, Fallback, T>;
 
 template<typename T, template<class> class Alias, typename U = Alias<T>>
 struct force_sfinae {
@@ -75,8 +75,7 @@ struct force_sfinae {
 };
 
 template<typename T>
-using shallow_decay = typename std::remove_cv<
-    typename std::remove_reference<T>::type>::type;
+using shallow_decay = std::remove_cv_t<std::remove_reference_t<T>>;
 
 template<typename T>
 struct is_reference_wrapper_t {

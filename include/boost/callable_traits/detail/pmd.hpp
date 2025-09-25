@@ -29,12 +29,12 @@ struct pmd<D T::*> : default_callable_traits<> {
     using class_type = T;
     using invoke_type = T const &;
     using type = D T::*;
-    using function_type = typename std::add_lvalue_reference<D>::type(invoke_type);
+    using function_type = std::add_lvalue_reference_t<D>(invoke_type);
     using qualified_function_type = D(invoke_type);
     using arg_types = std::tuple<invoke_type>;
     using non_invoke_arg_types = std::tuple<>;
 
-    using return_type = typename std::add_lvalue_reference<D>::type;
+    using return_type = std::add_lvalue_reference_t<D>;
 
     template<typename C>
     using apply_member_pointer = D C::*;

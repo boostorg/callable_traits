@@ -35,15 +35,6 @@ struct is_volatile_member : detail::traits<
         detail::shallow_decay<T>>::is_volatile_member;
 };
 
-#ifdef BOOST_CLBL_TRTS_DISABLE_VARIABLE_TEMPLATES
-
-template<typename T>
-struct is_volatile_member_v {
-    static_assert(std::is_same<T, detail::dummy>::value,
-        "Variable templates not supported on this compiler.");
-};
-
-#else
 //->
 // only available when variable templates are supported
 template<typename T>
@@ -53,8 +44,6 @@ BOOST_CLBL_TRAITS_INLINE_VAR
 constexpr bool is_volatile_member_v = //see below
 //<-
     detail::traits<detail::shallow_decay<T>>::is_volatile_member::value;
-
-#endif
 
 }} // namespace boost::callable_traits
 //->

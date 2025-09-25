@@ -24,7 +24,7 @@ namespace detail {
 
     template<typename T, typename C>
     struct make_member_pointer<T, C, true> {
-        using type = typename std::remove_reference<T>::type C::*;
+        using type = std::remove_reference_t<T> C::*;
     };
 
     template<typename C>

@@ -11,16 +11,16 @@ struct parameter_index_helper {
 
     using error_t = error_type<T>;
 
-    using args_tuple = typename std::conditional<IgnoreThisPointer,
+    using args_tuple = std::conditional_t<IgnoreThisPointer,
         typename detail::traits<T>::non_invoke_arg_types,
-        typename detail::traits<T>::arg_types>::type;
+        typename detail::traits<T>::arg_types>;
 
     static constexpr bool has_parameter_list =
         !std::is_same<args_tuple, invalid_type>::value
         && !std::is_same<args_tuple, reference_error>::value;
 
-    using temp_tuple = typename std::conditional<has_parameter_list,
-        args_tuple, std::tuple<error_t>>::type;
+    using temp_tuple = std::conditional_t<has_parameter_list,
+        args_tuple, std::tuple<error_t>>;
 
     static constexpr std::size_t parameter_list_size =
         std::tuple_size<temp_tuple>::value;
@@ -37,13 +37,13 @@ struct parameter_index_helper {
     static constexpr std::size_t count =
         has_parameter_list && !is_count_out_of_range ? Count : 0;
 
-    using permissive_tuple = typename std::conditional<
+    using permissive_tuple = std::conditional_v<
         has_parameter_list && !is_out_of_range,
-        args_tuple, std::tuple<error_t>>::type;
+        args_tuple, std::tuple<error_t>>;
 
-    using permissive_function = typename std::conditional<
+    using permissive_function = std::conditional_v<
         has_parameter_list && !is_out_of_range,
-        T, error_t(error_t)>::type;
+        T, error_t(error_t)>;
 };
 
 }}} // namespace boost::callable_traits::detail

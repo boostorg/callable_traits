@@ -19,8 +19,8 @@ struct PP_CAT(is_sub_failure_, CALLABLE_TRAIT_UNDER_TEST) {
     static auto test(...) -> std::true_type;
 
     template<typename A,
-        typename std::remove_reference<
-            TRAIT(CALLABLE_TRAIT_UNDER_TEST, A)>::type* = nullptr>
+        std::remove_reference_t<
+            TRAIT(CALLABLE_TRAIT_UNDER_TEST, A)>* = nullptr>
     static auto test(int) -> std::false_type;
 
     static constexpr bool value = decltype(test<T>(0))::value;
