@@ -65,8 +65,6 @@ Distributed under the Boost Software License, Version 1.0.
 #  endif // #if !defined( __clang__ )
 #endif // #ifdef _MSC_VER
 
-#define BOOST_CLBL_TRTS_IX_SEQ(...) ::std::index_sequence< __VA_ARGS__ >
-#define BOOST_CLBL_TRTS_MAKE_IX_SEQ(...) ::std::make_index_sequence< __VA_ARGS__ >
 #define BOOST_CLBL_TRTS_DISJUNCTION(...) ::std::disjunction< __VA_ARGS__ >
 
 #ifndef __cpp_variable_templates
@@ -76,10 +74,6 @@ Distributed under the Boost Software License, Version 1.0.
 #ifndef __cpp_lib_logical_traits
 #  include <boost/callable_traits/detail/polyfills/disjunction.hpp>
 #endif //__cpp_lib_logical_traits
-
-#ifndef __cpp_lib_integer_sequence
-#  include <boost/callable_traits/detail/polyfills/make_index_sequence.hpp>
-#endif // __cpp_lib_integer_sequence
 
 #if defined(BOOST_CLBL_TRTS_MSVC) && !defined(BOOST_DISABLE_WIN32)
 #  define BOOST_CLBL_TRTS_DEFAULT_VARARGS_CC __cdecl
