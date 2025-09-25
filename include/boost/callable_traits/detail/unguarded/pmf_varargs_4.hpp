@@ -145,5 +145,8 @@ struct pmf<Return(BOOST_CLBL_TRTS_VARARGS_CC T::*)(Args..., ...)
     template<template<class...> class Container>
     using expand_args = Container<invoke_type, Args...>;
 
+    template<template<class...> class Container>
+    using expand_non_invoke_args = Container<Args...>;
+
     using is_member_pointer = std::true_type;
 };

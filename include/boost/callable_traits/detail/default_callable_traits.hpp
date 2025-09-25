@@ -151,6 +151,9 @@ struct default_callable_traits {
     template<template<class...> class Container>
     using expand_args = error_t;
 
+    template<template<class...> class Container>
+    using expand_non_invoke_args = error_t;
+
     template<template<class...> class Container, typename... RightArgs>
     using expand_args_left = error_t;
 

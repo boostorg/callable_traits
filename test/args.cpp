@@ -40,27 +40,38 @@ struct foo7 {
 using std::is_same;
 
 int main() {
-
     {
         using pmf = decltype(&foo1::bar);
-        using args_t =  TRAIT(args, pmf);
-        CT_ASSERT(is_same<args_t, std::tuple<foo1&, char, float&, int>>{});
+        using args_t            =  TRAIT(args, pmf);
+        using non_invoke_args_t =  TRAIT(non_invoke_args, pmf);
+        CT_ASSERT(is_same<args_t,            std::tuple<foo1&, char, float&, int>>{});
+        CT_ASSERT(is_same<non_invoke_args_t, std::tuple<char, float&, int>>{});
     } {
         using pmf = decltype(&foo2::bar);
-        using args_t =  TRAIT(args, pmf);
-        CT_ASSERT(is_same<args_t, std::tuple<foo2&, char, float&, int>>{});
+        using args_t            =  TRAIT(args, pmf);
+        using non_invoke_args_t =  TRAIT(non_invoke_args, pmf);
+        CT_ASSERT(is_same<args_t,            std::tuple<foo2&, char, float&, int>>{});
+        CT_ASSERT(is_same<non_invoke_args_t, std::tuple<char, float&, int>>{});
     } {
-        using args_t =  TRAIT(args, foo3);
-        CT_ASSERT(is_same<args_t, std::tuple<char, float&, int>>{});
+        using args_t            =  TRAIT(args, foo3);
+        using non_invoke_args_t =  TRAIT(non_invoke_args, foo3);
+        CT_ASSERT(is_same<args_t,            std::tuple<char, float&, int>>{});
+        CT_ASSERT(is_same<non_invoke_args_t, std::tuple<char, float&, int>>{});
     } {
-        using args_t =  TRAIT(args, foo4);
-        CT_ASSERT(is_same<args_t, std::tuple<char, float&, int>>{});
+        using args_t            =  TRAIT(args, foo4);
+        using non_invoke_args_t =  TRAIT(non_invoke_args, foo4);
+        CT_ASSERT(is_same<args_t,            std::tuple<char, float&, int>>{});
+        CT_ASSERT(is_same<non_invoke_args_t, std::tuple<char, float&, int>>{});
     } {
-        using args_t =  TRAIT(args, decltype(foo5));
-        CT_ASSERT(is_same<args_t, std::tuple<char, float&, int>>{});
+        using args_t            =  TRAIT(args, decltype(foo5));
+        using non_invoke_args_t =  TRAIT(non_invoke_args, decltype(foo5));
+        CT_ASSERT(is_same<args_t,            std::tuple<char, float&, int>>{});
+        CT_ASSERT(is_same<non_invoke_args_t, std::tuple<char, float&, int>>{});
     } {
-        using args_t =  TRAIT(args, decltype(foo6));
-        CT_ASSERT(is_same<args_t, std::tuple<char, float&, int>>{});
+        using args_t            =  TRAIT(args, decltype(foo6));
+        using non_invoke_args_t =  TRAIT(non_invoke_args, decltype(foo6));
+        CT_ASSERT(is_same<args_t,            std::tuple<char, float&, int>>{});
+        CT_ASSERT(is_same<non_invoke_args_t, std::tuple<char, float&, int>>{});
     }
 
     return 0;

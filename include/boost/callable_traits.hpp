@@ -34,6 +34,7 @@ Distributed under the Boost Software License, Version 1.0.
 #include <boost/callable_traits/is_noexcept.hpp>
 #include <boost/callable_traits/is_transaction_safe.hpp>
 #include <boost/callable_traits/is_volatile_member.hpp>
+#include <boost/callable_traits/non_invoke_args.hpp>
 #include <boost/callable_traits/qualified_class_of.hpp>
 #include <boost/callable_traits/remove_member_const.hpp>
 #include <boost/callable_traits/remove_member_cv.hpp>

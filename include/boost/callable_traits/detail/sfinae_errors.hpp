@@ -78,6 +78,9 @@ namespace boost { namespace callable_traits {
     BOOST_CLBL_TRTS_DEFINE_SFINAE_ERROR_ORIGIN(expand_args)
     BOOST_CLBL_TRTS_SFINAE_MSG(expand_args, cannot_expand_the_parameter_list_of_first_template_argument)
 
+    BOOST_CLBL_TRTS_DEFINE_SFINAE_ERROR_ORIGIN(expand_non_invoke_args)
+    BOOST_CLBL_TRTS_SFINAE_MSG(expand_non_invoke_args, cannot_expand_the_parameter_list_of_first_template_argument2)
+
     BOOST_CLBL_TRTS_DEFINE_SFINAE_ERROR_ORIGIN(member_pointer_required)
     BOOST_CLBL_TRTS_SFINAE_MSG(member_pointer_required, type_is_not_a_member_pointer)
 

@@ -45,6 +45,9 @@ struct pmd<D T::*> : default_callable_traits<> {
     template<template<class...> class Container>
     using expand_args = Container<invoke_type>;
 
+    template<template<class...> class Container>
+    using expand_non_invoke_args = Container<>;
+
     using is_member_pointer = std::true_type;
 };
 

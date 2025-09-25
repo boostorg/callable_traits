@@ -45,6 +45,10 @@ struct function_object : Base {
     using expand_args = typename function<function_type>::template
         expand_args<Container>;
 
+    template<template<class...> class Container>
+    using expand_non_invoke_args = typename function<function_type>::template
+        expand_non_invoke_args<Container>;
+
     template<template<class...> class Container, typename... RightArgs>
     using expand_args_left = typename function<function_type>::template
         expand_args_left<Container, RightArgs...>;

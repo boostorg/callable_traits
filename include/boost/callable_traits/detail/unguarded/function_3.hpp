@@ -137,9 +137,12 @@ struct function<Return(Args...)
         BOOST_CLBL_TRTS_INCLUDE_QUALIFIERS
         BOOST_CLBL_TRTS_INCLUDE_TRANSACTION_SAFE
         BOOST_CLBL_TRTS_NOEXCEPT_SPEC;
-    
+
     template<template<class...> class Container>
     using expand_args = Container<Args...>;
+
+    template<template<class...> class Container>
+    using expand_non_invoke_args = Container<Args...>;
 
     using is_member_pointer = std::false_type;
 };
@@ -252,9 +255,12 @@ struct function<Return (Args..., ...)
         BOOST_CLBL_TRTS_INCLUDE_QUALIFIERS
         BOOST_CLBL_TRTS_INCLUDE_TRANSACTION_SAFE
         BOOST_CLBL_TRTS_NOEXCEPT_SPEC;
-    
+
     template<template<class...> class Container>
     using expand_args = Container<Args...>;
+
+    template<template<class...> class Container>
+    using expand_non_invoke_args = Container<Args...>;
     
     using is_member_pointer = std::false_type;
 };
