@@ -45,14 +45,6 @@ struct function_object : Base {
     using expand_args = typename function<function_type>::template
         expand_args<Container>;
 
-    template<template<class...> class Container, typename... RightArgs>
-    using expand_args_left = typename function<function_type>::template
-        expand_args_left<Container, RightArgs...>;
-
-    template<template<class...> class Container, typename... LeftArgs>
-    using expand_args_right = typename function<function_type>::template
-        expand_args_right<Container, LeftArgs...>;
-
     template<typename C, typename U = T>
     using apply_member_pointer =
         typename std::remove_reference<U>::type C::*;
