@@ -44,8 +44,6 @@ struct pmd<D T::*> : default_callable_traits<> {
 
     template<template<class...> class Container>
     using expand_args = Container<invoke_type>;
-
-    using is_member_pointer = std::true_type;
 };
 
 }}} // namespace boost::callable_traits::detail

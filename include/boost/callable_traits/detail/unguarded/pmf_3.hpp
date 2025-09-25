@@ -9,14 +9,14 @@ DO NOT INCLUDE THIS HEADER DIRECTLY
 */
 
 #define BOOST_CLBL_TRTS_NOEXCEPT_SPEC
-#define BOOST_CLBL_TRTS_IS_NOEXCEPT std::false_type
+#define BOOST_CLBL_TRTS_IS_NOEXCEPT false
 #include <boost/callable_traits/detail/unguarded/pmf_4.hpp>
 #undef BOOST_CLBL_TRTS_NOEXCEPT_SPEC
 #undef BOOST_CLBL_TRTS_IS_NOEXCEPT
 
 #ifdef BOOST_CLBL_TRTS_ENABLE_NOEXCEPT_TYPES
 #define BOOST_CLBL_TRTS_NOEXCEPT_SPEC noexcept
-#define BOOST_CLBL_TRTS_IS_NOEXCEPT std::true_type
+#define BOOST_CLBL_TRTS_IS_NOEXCEPT true
 #include <boost/callable_traits/detail/unguarded/pmf_4.hpp>
 #undef BOOST_CLBL_TRTS_NOEXCEPT_SPEC
 #undef BOOST_CLBL_TRTS_IS_NOEXCEPT

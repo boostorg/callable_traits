@@ -72,10 +72,10 @@ namespace boost { namespace callable_traits { namespace detail {
     using generalize_if_dissimilar = typename std::conditional<
         IsBaseOf::value || IsSame::value, T, generalize<T>>::type;
 
-    template<typename Traits, bool = Traits::is_const_member::value
-        || Traits::is_volatile_member::value
-        || Traits::is_lvalue_reference_member::value
-        || Traits::is_rvalue_reference_member::value>
+    template<typename Traits, bool = Traits::is_const_member
+        || Traits::is_volatile_member
+        || Traits::is_lvalue_reference_member
+        || Traits::is_rvalue_reference_member>
     struct test_invoke {
 
         template<typename... Rgs,

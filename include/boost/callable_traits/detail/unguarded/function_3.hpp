@@ -15,7 +15,7 @@ BOOST_CLBL_TRTS_INCLUDE_QUALIFIERS - the function-level qualifiers for the
 BOOST_CLBL_TRTS_INCLUDE_TRANSACTION_SAFE - the transaction_safe specifier for
     the current include (`transaction_safe` or nothing)
 
-BOOST_CLBL_TRTS_IS_TRANSACTION_SAFE - `std::true_type` or `std::false_type`,
+BOOST_CLBL_TRTS_IS_TRANSACTION_SAFE - `true` or `false`,
     tied on whether BOOST_CLBL_TRTS_INCLUDE_TRANSACTION_SAFE is `transaction_safe`
 
 BOOST_CLBL_TRTS_TRANSACTION_SAFE_SPECIFIER - `transaction_safe` when
@@ -24,7 +24,7 @@ BOOST_CLBL_TRTS_TRANSACTION_SAFE_SPECIFIER - `transaction_safe` when
 BOOST_CLBL_TRTS_NOEXCEPT_SPEC - the noexcept specifier for
     the current include (`noexcept` or nothing)
 
-BOOST_CLBL_TRTS_IS_NOEXCEPT - `std::true_type` or `std::false_type`,
+BOOST_CLBL_TRTS_IS_NOEXCEPT - `true` or `false`,
     tied on whether BOOST_CLBL_TRTS_NOEXCEPT_SPEC is `noexcept`
 
 BOOST_CLBL_TRTS_NOEXCEPT_SPECIFIER - `noexcept` if
@@ -67,7 +67,7 @@ struct function<Return(Args...)
         BOOST_CLBL_TRTS_INCLUDE_TRANSACTION_SAFE
         BOOST_CLBL_TRTS_NOEXCEPT_SPEC;
     
-    using is_noexcept = BOOST_CLBL_TRTS_IS_NOEXCEPT;
+    static constexpr bool is_noexcept = BOOST_CLBL_TRTS_IS_NOEXCEPT;
 
     using remove_noexcept = Return(Args...)
         BOOST_CLBL_TRTS_INCLUDE_QUALIFIERS
@@ -78,7 +78,7 @@ struct function<Return(Args...)
         BOOST_CLBL_TRTS_INCLUDE_TRANSACTION_SAFE
         BOOST_CLBL_TRTS_NOEXCEPT_SPECIFIER;
 
-    using is_transaction_safe = BOOST_CLBL_TRTS_IS_TRANSACTION_SAFE;
+    static constexpr bool is_transaction_safe = BOOST_CLBL_TRTS_IS_TRANSACTION_SAFE;
 
     using remove_transaction_safe = Return(Args...)
         BOOST_CLBL_TRTS_INCLUDE_QUALIFIERS
@@ -92,8 +92,8 @@ struct function<Return(Args...)
     using qualifiers = default_callable_traits<dummy BOOST_CLBL_TRTS_INCLUDE_QUALIFIERS>;
     
     template<qualifier_flags Flags>
-    using set_qualifiers = set_function_qualifiers<Flags, is_transaction_safe::value,
-        is_noexcept::value, Return, Args...>;
+    using set_qualifiers = set_function_qualifiers<Flags, is_transaction_safe,
+        is_noexcept, Return, Args...>;
     
     #ifdef BOOST_CLBL_TRTS_DISABLE_ABOMINABLE_FUNCTIONS
 
@@ -140,8 +140,6 @@ struct function<Return(Args...)
     
     template<template<class...> class Container>
     using expand_args = Container<Args...>;
-
-    using is_member_pointer = std::false_type;
 };
 
 
@@ -154,7 +152,7 @@ struct function<Return (Args..., ...)
      
     static constexpr bool value = true;
     
-    using has_varargs = std::true_type;
+    static constexpr bool has_varargs = true;
     using traits = function;
     using return_type = Return;
     using arg_types = std::tuple<Args...>;
@@ -178,7 +176,7 @@ struct function<Return (Args..., ...)
 
     using add_varargs = type;
 
-    using is_noexcept = BOOST_CLBL_TRTS_IS_NOEXCEPT;
+    static constexpr bool is_noexcept = BOOST_CLBL_TRTS_IS_NOEXCEPT;
 
     using remove_noexcept = Return(Args..., ...)
         BOOST_CLBL_TRTS_INCLUDE_QUALIFIERS
@@ -189,7 +187,7 @@ struct function<Return (Args..., ...)
         BOOST_CLBL_TRTS_INCLUDE_TRANSACTION_SAFE
         BOOST_CLBL_TRTS_NOEXCEPT_SPECIFIER;
 
-    using is_transaction_safe = BOOST_CLBL_TRTS_IS_TRANSACTION_SAFE;
+    static constexpr bool is_transaction_safe = BOOST_CLBL_TRTS_IS_TRANSACTION_SAFE;
 
     using remove_transaction_safe = Return(Args..., ...)
         BOOST_CLBL_TRTS_INCLUDE_QUALIFIERS
@@ -203,8 +201,8 @@ struct function<Return (Args..., ...)
     using qualifiers = default_callable_traits<dummy BOOST_CLBL_TRTS_INCLUDE_QUALIFIERS>;
     
     template<qualifier_flags Flags>
-    using set_qualifiers = set_varargs_function_qualifiers<Flags, is_transaction_safe::value,
-        is_noexcept::value, Return, Args...>;
+    using set_qualifiers = set_varargs_function_qualifiers<Flags, is_transaction_safe,
+        is_noexcept, Return, Args...>;
     
     #ifdef BOOST_CLBL_TRTS_DISABLE_ABOMINABLE_FUNCTIONS
 
@@ -255,6 +253,4 @@ struct function<Return (Args..., ...)
     
     template<template<class...> class Container>
     using expand_args = Container<Args...>;
-    
-    using is_member_pointer = std::false_type;
 };

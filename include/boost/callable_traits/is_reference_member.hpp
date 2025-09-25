@@ -28,12 +28,9 @@ struct is_reference_member;
 
 //<-
 template<typename T>
-struct is_reference_member : detail::traits<
-    detail::shallow_decay<T>>::is_reference_member {
-
-    using type = typename detail::traits<
-        detail::shallow_decay<T>>::is_reference_member;
-};
+struct is_reference_member : detail::bool_type<
+                                 detail::traits<detail::shallow_decay<T>>::is_reference_member>
+{ };
 
 #ifdef BOOST_CLBL_TRTS_DISABLE_VARIABLE_TEMPLATES
 
@@ -52,7 +49,7 @@ BOOST_CLBL_TRAITS_INLINE_VAR
 //->
 constexpr bool is_reference_member_v = //see below
 //<-
-    detail::traits<detail::shallow_decay<T>>::is_reference_member::value;
+    detail::traits<detail::shallow_decay<T>>::is_reference_member;
 
 #endif
 

@@ -28,7 +28,7 @@ struct default_callable_traits {
     using type = error_t;
     
     // std::true_type for callables with C-style variadics
-    using has_varargs = std::false_type;
+    static constexpr bool has_varargs = false;
     
     using return_type = error_t;
     
@@ -67,7 +67,7 @@ struct default_callable_traits {
     
     // std::true_type when the signature includes noexcept, when
     // the feature is available
-    using is_noexcept = std::false_type;
+    static constexpr bool is_noexcept = false;
 
     // adds noexcept to a signature if the feature is available
     using add_noexcept = error_t;
@@ -77,7 +77,7 @@ struct default_callable_traits {
 
     // std::true_type when the signature includes transaction_safe, when
     // the feature is available
-    using is_transaction_safe = std::false_type;
+    static constexpr bool is_transaction_safe = false;
 
     // adds transaction_safe to a signature if the feature is available
     using add_transaction_safe = error_t;
@@ -184,19 +184,19 @@ struct default_callable_traits {
     static constexpr qualifier_flags ref_flags = ref_of<T>::value;
     static constexpr qualifier_flags q_flags = cv_flags | ref_flags;
 
-    using has_member_qualifiers = std::integral_constant<bool, q_flags != default_>;
-    using is_const_member = std::integral_constant<bool, 0 < (cv_flags & const_)>;
-    using is_volatile_member = std::integral_constant<bool, 0 < (cv_flags & volatile_)>;
-    using is_cv_member = std::integral_constant<bool, cv_flags == (const_ | volatile_)>;
+    static constexpr bool has_member_qualifiers = q_flags != default_;
+    static constexpr bool is_const_member = 0 < (cv_flags & const_);
+    static constexpr bool is_volatile_member = 0 < (cv_flags & volatile_);
+    static constexpr bool is_cv_member = cv_flags == (const_ | volatile_);
 
 #ifdef BOOST_CLBL_TRTS_DISABLE_REFERENCE_QUALIFIERS
-    using is_reference_member = std::false_type;
-    using is_lvalue_reference_member = std::false_type;
-    using is_rvalue_reference_member = std::false_type;
+    static constexpr bool is_reference_member = false;
+    static constexpr bool is_lvalue_reference_member = false;
+    static constexpr bool is_rvalue_reference_member = false;
 #else
-    using is_reference_member = std::integral_constant<bool, 0 < ref_flags>;
-    using is_lvalue_reference_member = std::integral_constant<bool, ref_flags == lref_>;
-    using is_rvalue_reference_member = std::integral_constant<bool, ref_flags == rref_>;
+    static constexpr bool is_reference_member = 0 < ref_flags;
+    static constexpr bool is_lvalue_reference_member = ref_flags == lref_;
+    static constexpr bool is_rvalue_reference_member = ref_flags == rref_;
 #endif //#ifdef BOOST_CLBL_TRTS_DISABLE_REFERENCE_QUALIFIERS
 
 };

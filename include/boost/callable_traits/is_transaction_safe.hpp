@@ -28,12 +28,9 @@ struct is_transaction_safe;
 
 //<-
 template<typename T>
-struct is_transaction_safe : detail::traits<
-    detail::shallow_decay<T>>::is_transaction_safe {
-
-    using type = typename detail::traits<
-        detail::shallow_decay<T>>::is_transaction_safe;
-};
+struct is_transaction_safe : detail::bool_type<
+                                 detail::traits<detail::shallow_decay<T>>::is_transaction_safe>
+{ };
 
 #ifdef BOOST_CLBL_TRTS_DISABLE_VARIABLE_TEMPLATES
 
@@ -52,7 +49,7 @@ BOOST_CLBL_TRAITS_INLINE_VAR
 //->
 constexpr bool is_transaction_safe_v = //see below
 //<-
-    detail::traits<detail::shallow_decay<T>>::is_transaction_safe::value;
+    detail::traits<detail::shallow_decay<T>>::is_transaction_safe;
 
 #endif
 

@@ -33,10 +33,10 @@ struct function_object : Base {
     using invoke_type = error_t;
     using remove_varargs = error_t;
     using add_varargs = error_t;
-    using is_noexcept = typename Base::is_noexcept;
+    static constexpr bool is_noexcept = Base::is_noexcept;
     using add_noexcept = error_t;
     using remove_noexcept = error_t;
-    using is_transaction_safe = typename Base::is_transaction_safe;
+    static constexpr bool is_transaction_safe = Base::is_transaction_safe;
     using add_transaction_safe = error_t;
     using remove_transaction_safe = error_t;
     using clear_args = error_t;

@@ -13,7 +13,7 @@ BOOST_CLBL_TRTS_INCLUDE_QUALIFIERS - the function-level qualifiers for the
 BOOST_CLBL_TRTS_INCLUDE_TRANSACTION_SAFE - the transaction_safe specifier for
     the current include (`transaction_safe` or nothing)
 
-BOOST_CLBL_TRTS_IS_TRANSACTION_SAFE - `std::true_type` or `std::false_type`,
+BOOST_CLBL_TRTS_IS_TRANSACTION_SAFE - `true` or `false`,
     tied on whether BOOST_CLBL_TRTS_INCLUDE_TRANSACTION_SAFE is `transaction_safe`
 
 BOOST_CLBL_TRTS_TRANSACTION_SAFE_SPECIFIER - `transaction_safe` when
@@ -22,7 +22,7 @@ BOOST_CLBL_TRTS_TRANSACTION_SAFE_SPECIFIER - `transaction_safe` when
 BOOST_CLBL_TRTS_NOEXCEPT_SPEC - the noexcept specifier for
     the current include (`noexcept` or nothing)
 
-BOOST_CLBL_TRTS_IS_NOEXCEPT - `std::true_type` or `std::false_type`,
+BOOST_CLBL_TRTS_IS_NOEXCEPT - `true` or `false`,
     tied on whether BOOST_CLBL_TRTS_NOEXCEPT_SPEC is `noexcept`
 
 BOOST_CLBL_TRTS_NOEXCEPT_SPECIFIER - `noexcept` if
@@ -38,7 +38,7 @@ struct pmf<Return(BOOST_CLBL_TRTS_VARARGS_CC T::*)(Args..., ...)
 
     static constexpr bool value = true;
 
-    using has_varargs = std::true_type;
+    static constexpr bool has_varargs = true;
 
     using traits = pmf;
 
@@ -75,7 +75,7 @@ struct pmf<Return(BOOST_CLBL_TRTS_VARARGS_CC T::*)(Args..., ...)
 
     using add_varargs = type;
 
-    using is_noexcept = BOOST_CLBL_TRTS_IS_NOEXCEPT;
+    static constexpr bool is_noexcept = BOOST_CLBL_TRTS_IS_NOEXCEPT;
 
     using remove_noexcept = Return(BOOST_CLBL_TRTS_CC T::*)(Args..., ...)
         BOOST_CLBL_TRTS_INCLUDE_QUALIFIERS
@@ -86,7 +86,7 @@ struct pmf<Return(BOOST_CLBL_TRTS_VARARGS_CC T::*)(Args..., ...)
         BOOST_CLBL_TRTS_INCLUDE_TRANSACTION_SAFE
         BOOST_CLBL_TRTS_NOEXCEPT_SPECIFIER;
 
-    using is_transaction_safe = BOOST_CLBL_TRTS_IS_TRANSACTION_SAFE;
+    static constexpr bool is_transaction_safe = BOOST_CLBL_TRTS_IS_TRANSACTION_SAFE;
 
     using remove_transaction_safe = Return(BOOST_CLBL_TRTS_VARARGS_CC T::*)(Args..., ...)
         BOOST_CLBL_TRTS_INCLUDE_QUALIFIERS
@@ -103,7 +103,7 @@ struct pmf<Return(BOOST_CLBL_TRTS_VARARGS_CC T::*)(Args..., ...)
 
     template<qualifier_flags Flags>
     using set_qualifiers = set_varargs_member_function_qualifiers<
-            Flags, is_transaction_safe::value, is_noexcept::value,
+            Flags, is_transaction_safe, is_noexcept,
             BOOST_CLBL_TRTS_CC_TAG, T, Return, Args...>;
 
     using remove_member_reference = set_qualifiers<qualifiers::cv_flags>;
@@ -144,6 +144,4 @@ struct pmf<Return(BOOST_CLBL_TRTS_VARARGS_CC T::*)(Args..., ...)
 
     template<template<class...> class Container>
     using expand_args = Container<invoke_type, Args...>;
-
-    using is_member_pointer = std::true_type;
 };

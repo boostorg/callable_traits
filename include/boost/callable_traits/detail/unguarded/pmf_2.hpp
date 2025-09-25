@@ -58,14 +58,14 @@ struct set_member_function_qualifiers_t<
 };
 
 #define BOOST_CLBL_TRTS_INCLUDE_TRANSACTION_SAFE
-#define BOOST_CLBL_TRTS_IS_TRANSACTION_SAFE std::false_type
+#define BOOST_CLBL_TRTS_IS_TRANSACTION_SAFE false
 #include <boost/callable_traits/detail/unguarded/pmf_3.hpp>
 #undef BOOST_CLBL_TRTS_INCLUDE_TRANSACTION_SAFE
 #undef BOOST_CLBL_TRTS_IS_TRANSACTION_SAFE
 
 #ifdef BOOST_CLBL_TRTS_ENABLE_TRANSACTION_SAFE
 
-#define BOOST_CLBL_TRTS_IS_TRANSACTION_SAFE std::true_type
+#define BOOST_CLBL_TRTS_IS_TRANSACTION_SAFE true
 #define BOOST_CLBL_TRTS_INCLUDE_TRANSACTION_SAFE transaction_safe
 #include <boost/callable_traits/detail/unguarded/pmf_3.hpp>
 #undef BOOST_CLBL_TRTS_INCLUDE_TRANSACTION_SAFE
