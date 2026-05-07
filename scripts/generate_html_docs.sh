@@ -39,7 +39,6 @@ pushd boost/libs && git submodule init callable_traits \
   regex \
   smart_ptr \
   spirit \
-  static_assert \
   system \
   throw_exception \
   tokenizer \
